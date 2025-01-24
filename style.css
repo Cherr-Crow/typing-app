@@ -1,0 +1,36 @@
+.container {
+    max-width: 1220px;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
+.buttons {
+    margin-bottom: 40px;
+    padding: 35px 140px;
+    border-radius: 20px;
+    background-color: white;
+    -webkit-box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+    -moz-box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+    box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+}
+
+.block-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    all: unset;
+
+    font-size: 29px;
+    font-weight: bold;
+    margin-right: 10px;
+
+    border-bottom: 3px solid #410ef7;
+}
+
+.btn-repeat {
+    all: unset;
+    margin-right: 20px;
+}
