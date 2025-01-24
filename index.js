@@ -48,10 +48,13 @@ function press(e) {
         elements_arr[0].remove();
         count_right++; //  считаем правильные ответы
     
+    
     } else {
+        elements_arr[0].style.color = "red";
         errors_count++; // считаем ошибки
         progress.value = errors_count;
         console.log(e.key)
+
         if (errors_count > 20) { // если пользователь допустит ошибок больше чем у нас букв, игра закончится
             let fail = confirm("Game over! Хотите еще раз поиграть?"); 
             if (fail) {
@@ -72,3 +75,21 @@ function press(e) {
         }
     }
 }
+
+
+// change themes 
+
+const checkboxTheme = document.getElementById("theme");
+const heroTheme = document.getElementById("columns")
+
+checkboxTheme.addEventListener("change", () => {
+    if (checkboxTheme.checked) {
+        console.log("black")
+        document.body.classList.add("--dark-theme");
+        heroTheme.classList.add("--dark-theme__hero")
+    } else {
+        document.body.classList.remove("--dark-theme");
+        heroTheme.classList.remove("--dark-theme__hero")
+    }
+});
+
