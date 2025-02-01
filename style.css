@@ -243,6 +243,10 @@ ul {
     transition: .3s;
 }
 
+.--dark-theme .slider {
+    color:#1E1E1E;
+}
+
 .--dark-theme .menu {
     background-color: #1E1E1E;
     -webkit-box-shadow: 10px 10px 60px 0px rgba(20, 20, 21, 1);
@@ -339,5 +343,5 @@ ul {
 .--keyboard-none {
     opacity: 0;
     transform: scale(0.4);
-    transition: .4s;
+    transition: .3s;
 }

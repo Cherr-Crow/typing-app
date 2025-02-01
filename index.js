@@ -4,6 +4,7 @@ import { arr__easy, arr__medium, arr__hard } from "./bd.js";
 const btnEasy = document.getElementById("easy");
 const btnMedium = document.getElementById("medium");
 const btnHard = document.getElementById("hard");
+const progress = document.getElementById("prog"); // здесь отображается прогресс ошибок пользователя
 
 btnEasy.addEventListener("click", () => {
     localStorage.setItem("levl", "easy");
@@ -24,45 +25,48 @@ btnHard.addEventListener("click", () => {
 function getLevl(key) {
 
     if (key === "") {
+        return arr__easy;
+    } else if (key === "easy") {
         return arr__easy
-    } else if(key === "easy") {
-        return arr__easy
-    } else if(key === "medium") {
+    } else if (key === "medium") {
         return arr__medium
-    } else if(key === "hard") {
+    } else if (key === "hard") {
         return arr__hard
     }
 
-    
+
 }
 
-let begin = document.querySelector(".begin"); // здесь у нас надпись, которая приглашает пользователя нажать Enter для начала игры.
-let progress = document.getElementById("prog"); // здесь отображается прогресс ошибок пользователя
-let buttons = document.querySelector('.buttons'); // элемент в который мы будем писать наши буковки
+let begin = document.querySelector(".begin");
+let buttons = document.querySelector('.buttons');
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
 function drawBoard() {
+    if (localStorage.getItem("levl") == undefined) {
+        localStorage.setItem("levl", "");
+    }
+
     let mainLvl = getLevl(localStorage.getItem("levl"));
     let res = mainLvl[getRandomInt(12)]
     res = res.split('');
     res = res.reverse();
-    //for (let index = 0; index < 10; index++) { // в идеале показатель количества символов пользователь должен иметь возможность изменить
+    console.log(res)
+    progress.setAttribute("max", res.length)
+
     for (const word of res) {
-        // здесь у нас массив символов и цветов одинаковый по длине, поэтому неважно, откуда брать длину
+
         buttons.insertAdjacentHTML("afterbegin",
             `<button class='game-buttons button is-large 
             ' id='${word}'>${word}			
             </button>`);
-        //  }
 
     }
 }
 document.addEventListener('keydown', StartGame, {
     once: true
-    //благодаря once у нас отрисовка вызывается только один раз
 });
 
 const repeat = document.getElementById("btn-repeat");
@@ -71,20 +75,20 @@ const ariaBtns = document.querySelector(".buttons");
 repeat.addEventListener("click", () => {
     ariaBtns.innerHTML = "";
     drawBoard();
-    begin.style.display = "none"; // скрываем приглашающую кнопку
-    mainGame(); // игра началась
+    begin.style.display = "none";
+    mainGame();
 })
 
 function StartGame(e) {
     if (e.key == "Enter") {
         drawBoard();
-        begin.style.display = "none"; // скрываем приглашающую кнопку
-        mainGame(); // игра началась
+        begin.style.display = "none";
+        mainGame();
     }
 }
 
 function mainGame() {
-    document.addEventListener('keyup', press); //  я создал отдельную функцию, что бы была возможность ее удалять из прослушивателя
+    document.addEventListener('keyup', press);
 }
 
 var count_right = 0;
@@ -92,61 +96,28 @@ var count_right = 0;
 var errors_count = 0;
 
 function press(e) {
-    let elements_arr = document.querySelectorAll(".game-buttons");  // выбираем все созданные кнопки
+    let elements_arr = document.querySelectorAll(".game-buttons");
 
     if (elements_arr.length == 1) {
         location.reload()
     }
 
-    if (e.key == elements_arr[0].id) { // здесь можно выбирать и по querySelector, но тогда код будет длиннее
+    if (e.key == elements_arr[0].id) {
         elements_arr[0].remove();
-        count_right++; //  считаем правильные ответы
+        count_right++;
+        progress.value = count_right;
 
     } else {
 
         elements_arr[0].style.color = "red";
-        errors_count++; // считаем ошибки
-        progress.value = errors_count;
-
-        if (errors_count > elements_arr.length) { // если пользователь допустит ошибок больше чем у нас букв, игра закончится
-            let fail = confirm("Game over! Хотите еще раз поиграть?");
-            if (fail) {
-                document.location.reload(); // перезагрузка страницы если пользователь согласился еще раз играть
-            } else {
-                // здесь могла быть ваша реклама
-                document.addEventListener('keyup', press);
-            }
-        }
+        errors_count++;
     }
-    /*  if (count_right == length) {
-          alert("Вы выйграли!");
-          let win = confirm("Хотите поиграть еще?");
-          if(win){
-              drawBoard();
-              begin.style.display = "none"; // скрываем приглашающую кнопку
-              mainGame(); // игра началась
-          }
-      } */
-
 
 }
 
-
-// change themes 
 
 const checkboxTheme = document.getElementById("theme");
 const heroTheme = document.getElementById("columns");
-
-
-let theme = window.localStorage.getItem('theme');
-if (theme == "dark") {
-    darkTheme();
-    checkboxTheme.checked = false
-} else {
-    lightTheme();
-    checkboxTheme.checked = true
-}
-// theme == 'dark' ? darkTheme() : lightTheme();
 
 function lightTheme() {
     document.body.classList.add("--dark-theme");
@@ -155,16 +126,29 @@ function lightTheme() {
 
 function darkTheme() {
     document.body.classList.remove("--dark-theme");
-    heroTheme.classList.remove("--dark-theme__hero")
+    heroTheme.classList.remove("--dark-theme__hero");
+}
+
+function getTheme() {
+    console.log("sfgfd")
+    if (localStorage.getItem("data-theme") === "light") {
+        checkboxTheme.checked = false;
+        darkTheme()
+
+    } else if (localStorage.getItem("data-theme") === "dark") {
+        checkboxTheme.checked = true;
+        lightTheme()
+    }
 };
+
 
 checkboxTheme.addEventListener("change", () => {
     if (checkboxTheme.checked) {
-        localStorage.setItem('data-theme', 'light');
+        localStorage.setItem('data-theme', 'dark');
         lightTheme()
 
     } else {
-        localStorage.setItem('data-theme', 'dark');
+        localStorage.setItem('data-theme', 'light');
         darkTheme()
     }
 });
@@ -174,10 +158,28 @@ checkboxTheme.addEventListener("change", () => {
 const checkboxFocus = document.getElementById("focus");
 const keyboard = document.getElementById("keyboard");
 
+function getFocus() {
+    console.log("sfgfd")
+    if (localStorage.getItem("focus") === "true") {
+        checkboxFocus.checked = true;
+        keyboard.classList.add("--keyboard-none");
+
+    } else if (localStorage.getItem("focus") === "false") {
+        checkboxFocus.checked = false;
+keyboard.classList.remove("--keyboard-none"), localStorage.setItem("focus", "false")
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    getTheme();
+    getFocus()
+});
+
 checkboxFocus.addEventListener("change", () => {
     if (checkboxFocus.checked == true) {
-        keyboard.classList.add("--keyboard-none")
-    } else { keyboard.classList.remove("--keyboard-none") }
+        keyboard.classList.add("--keyboard-none");
+        localStorage.setItem("focus", true)
+    } else { keyboard.classList.remove("--keyboard-none"), localStorage.setItem("focus", "false") }
 })
 
 // menu settings
