@@ -1,6 +1,11 @@
 body {
+    position: relative;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition: .3s;
+}
+
+ul {
+    list-style: none;
 }
 
 .container {
@@ -10,6 +15,93 @@ body {
 
 .header {
     margin-bottom: 98px;
+}
+
+.menu {
+    opacity: 0;
+    transform: translateY(-500px);
+    position: absolute;
+    top: 0;
+    left: 17.9%;
+    max-width: 1220px;
+    width: 100%;
+    background-color: white;
+    -webkit-box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+    -moz-box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+    box-shadow: 10px 10px 60px 0px rgba(73, 85, 149, 0.27);
+    border-radius: 20px;
+    transition: .3s;
+}
+
+.menu__btn {
+    all: unset;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+}
+
+.menu__list {
+    padding: 0;
+    margin: 0;
+    padding: 80px 75px;
+}
+
+.menu__item {
+    display: flex;
+    align-items: center;
+}
+
+.menu__item ul {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu-list button {
+    all: unset;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+} 
+
+.menu__title {
+    font-size: 29px;
+}
+
+.menu-list li:not(:last-child) {
+    margin-right: 20px;
+}
+
+.menu-list li:nth-child(1) {
+    padding: 15px 55px;
+    background-image: url(./images/icons8-dale.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+
+    border-right: 2px solid #410ef7;
+}
+
+.menu-list li:nth-child(2){
+    padding: 15px 55px;
+    background-image: url(./images/icons8-вуди-вудпекер.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    border-right: 2px solid #410ef7;
+}
+
+.menu-list li:nth-child(3) {
+    padding: 15px 55px;
+    background-image: url(./images/icons8-джерри.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.--open-menu {
+    transform: translateY(0px);
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    transition: .3s;
 }
 
 .header__container {
@@ -55,7 +147,7 @@ body {
 
     font-size: 29px;
     font-weight: bold;
-    margin-right: 10px;
+    padding: 2px;
 
     border-bottom: 3px solid #410ef7;
 }
@@ -77,10 +169,29 @@ body {
     height: var(--height-of-switch);
 }
 
+.switch-focus {
+    width: 7.5em;
+}
+
+.switch-focus span {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
+}
+
+.switch-focus .slider {
+    background-color: #f4f4f5;
 }
 
 .slider {
@@ -110,12 +221,18 @@ body {
 
 .switch input:checked+.slider {
     background-color: #303136;
+    color: white;
 }
 
-.switch input:checked+.slider::before {
+.switch:last-child input:checked+.slider::before {
     left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider, .0.3em)));
     background: #303136;
     box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
+
+.header:first-child .switch-focus input:checked+.slider::before  {
+    left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider, .0.3em)));
+    background: linear-gradient(40deg, #8c00ff, #d009e2 70%);
 }
 
 /* --dark-theme */
@@ -124,6 +241,18 @@ body {
     color: white;
     background-color: #1e1e1e;
     transition: .3s;
+}
+
+.--dark-theme .menu {
+    background-color: #1E1E1E;
+    -webkit-box-shadow: 10px 10px 60px 0px rgba(20, 20, 21, 1);
+    -moz-box-shadow: 10px 10px 60px 0px rgba(20, 20, 21, 1);
+    box-shadow: 10px 10px 60px 0px rgba(20, 20, 21, 1);
+    border-radius: 20px;
+}
+
+.--dark-theme .keyboard {
+    color:#303136;
 }
 
 .--dark-theme svg path {
@@ -147,5 +276,68 @@ body {
     right: 40%;
     display: flex;
     align-items: end;
-    
+
+}
+
+.hero {
+    margin-bottom: 128px;
+}
+
+/* KEYBOARD */
+
+.line {
+    display: flex;
+    justify-content: center;
+}
+
+.line div {
+    margin-bottom: 7px;
+    padding: 20px 25px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.line div:not(:last-child) {
+    margin-right: 7px;
+}
+
+.F1 {
+    background-color: #DBE2E5;
+}
+
+.F2 {
+ background-color: #C9C8FF;
+}
+
+.F3 {
+     background-color: #ACF3C7;
+}
+
+.F4 {
+    background-color: #FFBDCA;
+}
+
+.F5 {
+    background-color: #99E9E5;
+}
+
+.F6 {
+    background-color: #FFEB99;
+}
+
+.enter {
+    display: flex;
+    justify-content: center;
+    width: 260px;
+}
+
+.keyboard {
+    transition: .4s;
+    transform: scale(1);
+}
+
+.--keyboard-none {
+    opacity: 0;
+    transform: scale(0.4);
+    transition: .4s;
 }
